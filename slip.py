@@ -72,8 +72,15 @@ class Enlace:
             self.buffer = self.buffer[split_pos + 1:]
 
             if len(dtg) > 0:
+                dtg = dtg.replace(b'\xdb\xdd', b'\xdb').replace(b'\xdb\xdc', b'\xc0')
                 print(dtg)
-                self.callback(dtg)
+                try:
+                    self.callback(dtg)
+                except:
+                    import traceback
+                    traceback.print_exc()
+                finally:
+                    pass
 
             split_pos = self.buffer.find(b'\xc0')
 
